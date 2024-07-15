@@ -1,13 +1,20 @@
 version: '3.7'
   
 services:
-  api_foods:
-    image: foods/api_foods
-    build: ./api-foods
+  foods-api:
+    image: foods/foods-api
+    build: ./foods-api
     ports:
       - "4000:4000"
     volumes:
-      - ./api-foods:/home/node/app
+      - ./foods-api:/home/node/api
+  foods-app:
+    image: foods/foods-app
+    build: ./foods-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./foods-app:/home/node/app
   db_foods:
     image: postgres
     ports:
@@ -17,7 +24,7 @@ services:
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - POSTGRES_DB=${DATABASE_NAME}
     volumes:
-      - foods_pg_data:/bitnami/postgresql
+      - foods_pg_data:/bhodedejava/postgresql
 
 volumes:
   foods_pg_data:
